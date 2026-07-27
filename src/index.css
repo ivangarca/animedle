@@ -1,0 +1,330 @@
+:root {
+  --bg: #0e1117;
+  --panel: #161b26;
+  --panel2: #1d2330;
+  --linea: #2a3141;
+  --texto: #e6e9ef;
+  --suave: #8b93a5;
+  --ok: #2e9e5b;
+  --casi: #c99a2e;
+  --no: #3a4152;
+  --acento: #7c5cff;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px 16px 60px;
+  background: var(--bg);
+  color: var(--texto);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.envoltorio {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------- cabecera ---------- */
+
+header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 36px;
+  letter-spacing: -1px;
+}
+
+h1 span {
+  color: var(--acento);
+}
+
+.subtitulo {
+  color: var(--suave);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+/* ---------- buscador ---------- */
+
+.buscador {
+  position: relative;
+  max-width: 460px;
+  margin: 0 auto 10px;
+}
+
+.buscador input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  background: var(--panel);
+  color: var(--texto);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.buscador input:focus {
+  border-color: var(--acento);
+}
+
+.buscador input:disabled {
+  opacity: 0.45;
+}
+
+.sugerencias {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--panel);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgb(0 0 0 / 55%);
+}
+
+.sugerencias li {
+  padding: 11px 14px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.sugerencias li small {
+  color: var(--suave);
+  margin-left: 8px;
+}
+
+.sugerencias li.sel {
+  background: var(--panel2);
+}
+
+.contador {
+  text-align: center;
+  color: var(--suave);
+  font-size: 13px;
+  margin: 0 0 18px;
+}
+
+/* ---------- tabla de intentos ---------- */
+
+.tabla {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: 1.5fr 1.2fr 0.8fr 0.9fr 1.2fr 1.3fr 0.9fr;
+  gap: 6px;
+  min-width: 780px;
+  margin-bottom: 6px;
+}
+
+.fila.cabecera .celda {
+  background: none;
+  border: none;
+  min-height: 0;
+  padding: 4px 8px;
+  color: var(--suave);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.celda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 54px;
+  padding: 10px 8px;
+  background: var(--no);
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+  animation: aparecer 0.25s ease-out;
+}
+
+.celda.ok {
+  background: var(--ok);
+  border-color: var(--ok);
+}
+
+.celda.casi {
+  background: var(--casi);
+  border-color: var(--casi);
+}
+
+.celda.nombre {
+  background: var(--panel2);
+  font-weight: 600;
+}
+
+.flecha {
+  font-weight: 700;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- panel final ---------- */
+
+.panel {
+  max-width: 460px;
+  margin: 26px auto 0;
+  padding: 22px;
+  text-align: center;
+  background: var(--panel);
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.panel p {
+  margin: 0 0 14px;
+  color: var(--suave);
+  font-size: 14px;
+}
+
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.estadisticas div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.estadisticas strong {
+  font-size: 20px;
+}
+
+.estadisticas span {
+  color: var(--suave);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.compartir {
+  margin: 0;
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.botones {
+  margin-top: 16px;
+}
+
+button {
+  margin: 0 4px;
+  padding: 11px 18px;
+  background: var(--acento);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+button.sec {
+  background: var(--panel2);
+  color: var(--texto);
+  border: 1px solid var(--linea);
+}
+
+button:hover {
+  filter: brightness(1.15);
+}
+
+.nota {
+  margin: 14px 0 0 !important;
+  font-size: 12px !important;
+}
+
+/* ---------- pie ---------- */
+
+footer {
+  margin-top: 36px;
+  text-align: center;
+  color: var(--suave);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.leyenda {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  margin: 0 6px 0 14px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.leyenda.ok {
+  background: var(--ok);
+}
+.leyenda.casi {
+  background: var(--casi);
+}
+.leyenda.no {
+  background: var(--no);
+}
+
+.fino {
+  max-width: 460px;
+  margin: 10px auto 0;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 30px;
+  }
+  .celda {
+    font-size: 12px;
+    min-height: 48px;
+  }
+}
