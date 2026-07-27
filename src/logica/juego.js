@@ -49,9 +49,13 @@ export function numeroDelDia(fecha = new Date()) {
  * Elige el personaje del dia.
  * Al derivarlo de la fecha, todo el mundo juega el mismo sin necesidad
  * de servidor, base de datos ni sincronizacion. Coste cero.
+ *
+ * `sufijo` sirve para que cada coleccion tenga su propio personaje del dia:
+ * si no lo pasaramos, la coleccion de Dragon Ball y la general caerian
+ * siempre en el mismo indice.
  */
-export function personajeDelDia(personajes, fecha = new Date()) {
-  return personajes[hash(claveDelDia(fecha)) % personajes.length]
+export function personajeDelDia(personajes, fecha = new Date(), sufijo = '') {
+  return personajes[hash(claveDelDia(fecha) + sufijo) % personajes.length]
 }
 
 export function personajeAleatorio(personajes) {

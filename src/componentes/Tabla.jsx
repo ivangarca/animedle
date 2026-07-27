@@ -1,4 +1,5 @@
 import { COLUMNAS } from '../logica/juego.js'
+import { estiloDeSerie } from '../datos/series.js'
 
 /**
  * Tabla de intentos. El intento mas reciente arriba, que es lo que el
@@ -20,7 +21,9 @@ export default function Tabla({ intentos }) {
 
       {[...intentos].reverse().map((intento) => (
         <div className="fila" key={intento.personaje.n}>
-          <div className="celda nombre">{intento.personaje.n}</div>
+          <div className="celda nombre" style={estiloDeSerie(intento.personaje.serie)}>
+            {intento.personaje.n}
+          </div>
           {intento.celdas.map((celda) => (
             <div className={`celda ${celda.estado}`} key={celda.clave}>
               {celda.texto}

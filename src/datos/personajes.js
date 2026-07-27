@@ -26,9 +26,9 @@
  */
 export const PERSONAJES = [
   { n: 'Goku', a: ['kakarot', 'kakarotto', 'son goku'], serie: 'Dragon Ball', anio: 1986, rol: 'Protagonista', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Vegeta', a: [], serie: 'Dragon Ball', anio: 1986, rol: 'Rival', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Gohan', a: ['son gohan'], serie: 'Dragon Ball', anio: 1986, rol: 'Secundario', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Piccolo', a: ['picolo'], serie: 'Dragon Ball', anio: 1986, rol: 'Secundario', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
+  { n: 'Vegeta', a: [], serie: 'Dragon Ball', anio: 1986, rol: 'Protagonista / Antagonista', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
+  { n: 'Gohan', a: ['son gohan'], serie: 'Dragon Ball', anio: 1986, rol: 'Protagonista', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
+  { n: 'Piccolo', a: ['picolo'], serie: 'Dragon Ball', anio: 1986, rol: 'Protagonista', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
   { n: 'Freezer', a: ['frieza', 'freeza'], serie: 'Dragon Ball', anio: 1986, rol: 'Antagonista', afi: 'Ejercito de Freezer', poder: 'Ki / Artes marciales', gen: 'Masculino' },
   { n: 'Bulma', a: [], serie: 'Dragon Ball', anio: 1986, rol: 'Protagonista', afi: 'Guerreros Z', poder: 'Tecnologia', gen: 'Femenino' },
 
