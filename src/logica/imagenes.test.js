@@ -59,4 +59,26 @@ describe('imagenDe', () => {
       expect(url === null || typeof url === 'string').toBe(true)
     }
   })
+
+  /**
+   * Dos personajes con la misma URL significa que el script de descarga
+   * se equivoco con uno de los dos. Este test lo caza sin tener que
+   * revisar 138 cartas a ojo.
+   */
+  it('ningun personaje comparte imagen con otro', () => {
+    const porUrl = new Map()
+
+    for (const p of PERSONAJES) {
+      const url = imagenDe(p)
+      if (!url) continue
+      if (!porUrl.has(url)) porUrl.set(url, [])
+      porUrl.get(url).push(p.n)
+    }
+
+    const duplicados = [...porUrl.values()]
+      .filter((nombres) => nombres.length > 1)
+      .map((nombres) => nombres.join(' = '))
+
+    expect(duplicados).toEqual([])
+  })
 })

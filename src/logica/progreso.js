@@ -17,6 +17,16 @@ import { claveDelDia } from './juego.js'
 
 const CLAVE = 'animedle:progreso:v1'
 
+/* ==================================================================
+ * INTERRUPTOR DE PRUEBAS
+ *
+ *   false -> puedes repetir todos los retos que quieras (para probar)
+ *   true  -> un reto por tematica y dia (comportamiento real)
+ *
+ * ANTES DE PUBLICAR: ponlo en true.
+ * ================================================================== */
+export const UN_RETO_POR_DIA = false
+
 /** @returns {Record<string, {dia: string, intentos: number, personaje: string}>} */
 export function leerProgreso() {
   try {
@@ -48,6 +58,18 @@ export function guardarResultado(coleccion, { intentos, personaje, fecha = new D
 /** ¿Se ha completado ya hoy esta coleccion? */
 export function completadaHoy(progreso, coleccion, fecha = new Date()) {
   return progreso[coleccion]?.dia === claveDelDia(fecha)
+}
+
+/**
+ * ¿Esta bloqueada esta coleccion ahora mismo?
+ *
+ * Es lo que usa la interfaz. Separado de `completadaHoy` a proposito:
+ * esa funcion responde a un hecho ("la jugo hoy") y esta a una regla
+ * ("por tanto no puede volver a jugarla"). Asi el interruptor de pruebas
+ * no toca la logica que esta testeada.
+ */
+export function bloqueadaHoy(progreso, coleccion, fecha = new Date()) {
+  return UN_RETO_POR_DIA && completadaHoy(progreso, coleccion, fecha)
 }
 
 /** Milisegundos que faltan para las 00:00 del dia siguiente. */

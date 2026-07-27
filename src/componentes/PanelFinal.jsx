@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Confeti from './Confeti.jsx'
 import { mensajeDeVictoria, resumenCompartible } from '../logica/juego.js'
 import { mediaDeIntentos } from '../logica/estadisticas.js'
+import { UN_RETO_POR_DIA } from '../logica/progreso.js'
 
 /** Panel que aparece al acertar: mensaje, estadisticas y compartir. */
 export default function PanelFinal({
@@ -64,7 +65,7 @@ export default function PanelFinal({
           </button>
         </div>
 
-        <p className="nota">Esta temática vuelve a las 00:00.</p>
+        {UN_RETO_POR_DIA && <p className="nota">Esta temática vuelve a las 00:00.</p>}
       </div>
     </>
   )

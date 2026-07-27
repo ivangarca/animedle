@@ -7,7 +7,13 @@
  * Es la razon de que `fecha` sea un argumento y no un `new Date()` dentro.
  */
 import { describe, it, expect } from 'vitest'
-import { completadaHoy, formatearEspera, msHastaMedianoche } from './progreso.js'
+import {
+  UN_RETO_POR_DIA,
+  bloqueadaHoy,
+  completadaHoy,
+  formatearEspera,
+  msHastaMedianoche,
+} from './progreso.js'
 
 const HOY = new Date(2026, 6, 27, 15, 30) // 27/07/2026 a las 15:30
 
@@ -27,6 +33,23 @@ describe('completadaHoy', () => {
 
   it('deja jugar una coleccion que no se ha tocado nunca', () => {
     expect(completadaHoy(progreso, 'Naruto', HOY)).toBe(false)
+  })
+})
+
+describe('bloqueadaHoy', () => {
+  const progreso = {
+    'One Piece': { dia: '2026-07-27', intentos: 4, personaje: 'Nami' },
+  }
+
+  it('sigue la regla del interruptor', () => {
+    // Este test no asume el valor del interruptor: comprueba que
+    // bloqueadaHoy y completadaHoy son coherentes con el.
+    const bloqueada = bloqueadaHoy(progreso, 'One Piece', HOY)
+    expect(bloqueada).toBe(UN_RETO_POR_DIA && completadaHoy(progreso, 'One Piece', HOY))
+  })
+
+  it('nunca bloquea una coleccion sin jugar', () => {
+    expect(bloqueadaHoy(progreso, 'Naruto', HOY)).toBe(false)
   })
 })
 

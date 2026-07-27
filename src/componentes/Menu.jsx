@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { SERIES } from '../datos/series.js'
 import { TODOS, coleccionesDisponibles } from '../logica/colecciones.js'
-import { completadaHoy, formatearEspera, msHastaMedianoche } from '../logica/progreso.js'
+import {
+  UN_RETO_POR_DIA,
+  bloqueadaHoy,
+  formatearEspera,
+  msHastaMedianoche,
+} from '../logica/progreso.js'
 
 const COLOR_POR_DEFECTO = '#7c5cff'
 
@@ -18,7 +23,7 @@ export default function Menu({ personajes, progreso, onElegir }) {
   const colecciones = coleccionesDisponibles(personajes)
   const espera = useCuentaAtras()
 
-  const generalHecha = completadaHoy(progreso, TODOS)
+  const generalHecha = bloqueadaHoy(progreso, TODOS)
 
   return (
     <div className="menu">
@@ -39,7 +44,7 @@ export default function Menu({ personajes, progreso, onElegir }) {
             key={coleccion.id}
             titulo={coleccion.nombre}
             subtitulo={`${coleccion.total} personajes`}
-            bloqueada={completadaHoy(progreso, coleccion.id)}
+            bloqueada={bloqueadaHoy(progreso, coleccion.id)}
             espera={espera}
             color={SERIES[coleccion.id]?.color ?? COLOR_POR_DEFECTO}
             onElegir={() => onElegir(coleccion.id)}
@@ -48,7 +53,9 @@ export default function Menu({ personajes, progreso, onElegir }) {
       </div>
 
       <p className="menu-nota">
-        Un reto por temática y día. A las 00:00 se renuevan todos.
+        {UN_RETO_POR_DIA
+          ? 'Un reto por temática y día. A las 00:00 se renuevan todos.'
+          : '⚙ Modo pruebas: puedes repetir los retos sin límite.'}
       </p>
     </div>
   )

@@ -9,7 +9,7 @@ import { PERSONAJES } from './datos/personajes.js'
 import { comparar, numeroDelDia, personajeDelDia } from './logica/juego.js'
 import { TODOS, nombreDeColeccion, personajesDe } from './logica/colecciones.js'
 import { leerEstadisticas, registrarReto } from './logica/estadisticas.js'
-import { completadaHoy, guardarResultado, leerProgreso } from './logica/progreso.js'
+import { bloqueadaHoy, guardarResultado, leerProgreso } from './logica/progreso.js'
 import { anadirMonedas, leerCartera } from './logica/cartera.js'
 import { MONEDAS_POR_ACIERTO } from './logica/cartas.js'
 
@@ -38,7 +38,7 @@ export default function App() {
     (id) => {
       // Cinturon y tirantes: el menu ya deshabilita las hechas, pero si el
       // dia cambia con la pestana abierta esto evita repetir una coleccion.
-      if (completadaHoy(progreso, id)) return
+      if (bloqueadaHoy(progreso, id)) return
 
       setColeccion(id)
       setObjetivo(personajeDelDia(personajesDe(id), new Date(), `:${id}`))
