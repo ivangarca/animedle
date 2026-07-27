@@ -30,7 +30,7 @@ export const PERSONAJES = [
   { n: 'Gohan', a: ['son gohan'], serie: 'Dragon Ball', anio: 1986, rol: 'Secundario', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
   { n: 'Piccolo', a: ['picolo'], serie: 'Dragon Ball', anio: 1986, rol: 'Secundario', afi: 'Guerreros Z', poder: 'Ki / Artes marciales', gen: 'Masculino' },
   { n: 'Freezer', a: ['frieza', 'freeza'], serie: 'Dragon Ball', anio: 1986, rol: 'Antagonista', afi: 'Ejercito de Freezer', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Bulma', a: [], serie: 'Dragon Ball', anio: 1986, rol: 'Secundario', afi: 'Guerreros Z', poder: 'Tecnologia', gen: 'Femenino' },
+  { n: 'Bulma', a: [], serie: 'Dragon Ball', anio: 1986, rol: 'Protagonista', afi: 'Guerreros Z', poder: 'Tecnologia', gen: 'Femenino' },
 
   { n: 'Monkey D. Luffy', a: ['luffy', 'lufi', 'sombrero de paja'], serie: 'One Piece', anio: 1999, rol: 'Protagonista', afi: 'Sombreros de Paja', poder: 'Fruta del Diablo', gen: 'Masculino' },
   { n: 'Roronoa Zoro', a: ['zoro', 'zolo'], serie: 'One Piece', anio: 1999, rol: 'Secundario', afi: 'Sombreros de Paja', poder: 'Espadachin', gen: 'Masculino' },
