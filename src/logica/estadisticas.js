@@ -1,19 +1,24 @@
 /**
  * Estadisticas y racha, guardadas en localStorage.
+ *
+ * Como ya no se puede perder (se juega hasta acertar), lo que se mide no
+ * es el porcentaje de acierto sino cuantos intentos necesitas de media.
+ * La racha cuenta dias seguidos jugando al menos un reto.
+ *
  * Todo envuelto en try/catch porque en modo incognito o con las cookies
  * bloqueadas localStorage puede lanzar excepcion, y eso no debe tumbar el juego.
  */
 import { claveDelDia } from './juego.js'
 
-const CLAVE = 'animedle:estadisticas:v1'
+const CLAVE = 'animedle:estadisticas:v2'
 
 const INICIAL = {
-  partidas: 0,
-  victorias: 0,
+  retos: 0, // retos completados en total
+  intentosTotales: 0, // suma de intentos, para calcular la media
+  mejorPartida: null, // menos intentos logrados en un reto
   racha: 0,
   mejorRacha: 0,
-  ultimoDia: null, // clave YYYY-MM-DD del ultimo reto diario jugado
-  distribucion: {}, // { "1": 0, "2": 3, ... } intentos usados al ganar
+  ultimoDia: null, // clave YYYY-MM-DD del ultimo dia jugado
 }
 
 export function leerEstadisticas() {
@@ -33,36 +38,44 @@ function guardar(datos) {
   }
 }
 
+/** Dia anterior a una fecha, en formato YYYY-MM-DD. */
+function claveDeAyer(fecha) {
+  const ayer = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate() - 1)
+  return claveDelDia(ayer)
+}
+
 /**
- * Registra el final de una partida del reto diario.
- * El modo libre no cuenta para las estadisticas: si contase, la racha
- * no significaria nada.
+ * Registra un reto completado.
+ * La racha solo sube una vez al dia, da igual cuantas tematicas juegues.
  */
-export function registrarPartida({ gano, intentos, fecha = new Date() }) {
+export function registrarReto({ intentos, fecha = new Date() }) {
   const hoy = claveDelDia(fecha)
   const previas = leerEstadisticas()
 
-  // Evita contar dos veces el mismo dia si recarga la pagina.
-  if (previas.ultimoDia === hoy) return previas
-
-  const racha = gano ? previas.racha + 1 : 0
-  const distribucion = { ...previas.distribucion }
-  if (gano) distribucion[intentos] = (distribucion[intentos] || 0) + 1
+  let racha = previas.racha
+  if (previas.ultimoDia !== hoy) {
+    // Si el ultimo dia jugado fue ayer, la racha continua. Si no, vuelve a 1.
+    racha = previas.ultimoDia === claveDeAyer(fecha) ? previas.racha + 1 : 1
+  }
 
   const nuevas = {
-    partidas: previas.partidas + 1,
-    victorias: previas.victorias + (gano ? 1 : 0),
+    retos: previas.retos + 1,
+    intentosTotales: previas.intentosTotales + intentos,
+    mejorPartida:
+      previas.mejorPartida === null
+        ? intentos
+        : Math.min(previas.mejorPartida, intentos),
     racha,
     mejorRacha: Math.max(previas.mejorRacha, racha),
     ultimoDia: hoy,
-    distribucion,
   }
 
   guardar(nuevas)
   return nuevas
 }
 
-export function porcentajeAcierto(estadisticas) {
-  if (!estadisticas.partidas) return 0
-  return Math.round((estadisticas.victorias / estadisticas.partidas) * 100)
+/** Media de intentos, con un decimal. */
+export function mediaDeIntentos(estadisticas) {
+  if (!estadisticas.retos) return '—'
+  return (estadisticas.intentosTotales / estadisticas.retos).toFixed(1)
 }

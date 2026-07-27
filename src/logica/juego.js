@@ -5,7 +5,10 @@
  */
 import { normalizar } from './busqueda.js'
 
-export const MAX_INTENTOS = 8
+/*
+ * No hay limite de intentos: se juega hasta acertar.
+ * El limite llegara con el modo dificil.
+ */
 
 /** Columnas del modo clasico, en orden. */
 export const COLUMNAS = [
@@ -119,6 +122,25 @@ export function comparar(personaje, objetivo) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Mensajes                                                           */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Mensaje de victoria segun lo que has tardado.
+ * Detalle pequeno que cambia mucho como se siente el juego: un texto
+ * distinto da la sensacion de que el juego se ha enterado de lo que
+ * has hecho.
+ */
+export function mensajeDeVictoria(intentos) {
+  if (intentos === 1) return '¡A la primera! Eso o has hecho trampa.'
+  if (intentos === 2) return '¡Casi de un tiro! Impresionante.'
+  if (intentos <= 4) return '¡Muy bien! Y con margen de sobra.'
+  if (intentos <= 7) return '¡Correcto! Te ha costado un poco.'
+  if (intentos <= 12) return '¡Lo tenemos! Ha habido pelea.'
+  return '¡Por fin! Eso ha sido una odisea.'
+}
+
+/* ------------------------------------------------------------------ */
 /* Resultado compartible                                              */
 /* ------------------------------------------------------------------ */
 
@@ -128,14 +150,13 @@ const EMOJI = { ok: '🟩', casi: '🟨', no: '🟥' }
  * Cuadricula de emojis. Este es el mecanismo que hizo viral al Wordle:
  * el resultado se puede pegar en WhatsApp o Discord sin spoilear nada.
  */
-export function resumenCompartible({ intentos, gano, modoLibre, fecha = new Date() }) {
-  const cabecera = modoLibre
-    ? 'Animedle (modo libre)'
-    : `Animedle #${numeroDelDia(fecha)}`
-  const marcador = `${gano ? intentos.length : 'X'}/${MAX_INTENTOS}`
+export function resumenCompartible({ intentos, etiqueta = '', fecha = new Date() }) {
+  const tematica = etiqueta ? ` ${etiqueta}` : ''
+  const cabecera = `Animedle${tematica} #${numeroDelDia(fecha)}`
+  const marcador = `${intentos.length} ${intentos.length === 1 ? 'intento' : 'intentos'}`
   const cuadricula = intentos
     .map((fila) => fila.celdas.map((c) => EMOJI[c.estado]).join(''))
     .join('\n')
 
-  return `${cabecera} ${marcador}\n${cuadricula}`
+  return `${cabecera} — ${marcador}\n${cuadricula}`
 }

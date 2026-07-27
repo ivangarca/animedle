@@ -13,7 +13,7 @@ import {
   claveDelDia,
   numeroDelDia,
   resumenCompartible,
-  MAX_INTENTOS,
+  mensajeDeVictoria,
 } from './juego.js'
 import { PERSONAJES } from '../datos/personajes.js'
 
@@ -133,22 +133,42 @@ describe('reto diario', () => {
 })
 
 describe('resumenCompartible', () => {
-  it('incluye el marcador y una fila de emojis por intento', () => {
-    const goku = buscarNombre('Goku')
-    const intentos = [comparar(buscarNombre('Vegeta'), goku), comparar(goku, goku)]
-    const texto = resumenCompartible({ intentos, gano: true, modoLibre: false })
-    const lineas = texto.split('\n')
+  const goku = buscarNombre('Goku')
+  const dosIntentos = () => [comparar(buscarNombre('Vegeta'), goku), comparar(goku, goku)]
 
-    expect(lineas[0]).toContain(`2/${MAX_INTENTOS}`)
+  it('incluye el numero de intentos y una fila de emojis por intento', () => {
+    const lineas = resumenCompartible({ intentos: dosIntentos() }).split('\n')
+
+    expect(lineas[0]).toContain('2 intentos')
     expect(lineas).toHaveLength(3) // cabecera + 2 intentos
     expect(lineas[2]).toBe('🟩🟩🟩🟩🟩🟩')
   })
 
-  it('marca la derrota con X', () => {
-    const goku = buscarNombre('Goku')
-    const intentos = [comparar(buscarNombre('Naruto Uzumaki'), goku)]
-    const texto = resumenCompartible({ intentos, gano: false, modoLibre: false })
-    expect(texto.split('\n')[0]).toContain(`X/${MAX_INTENTOS}`)
+  it('usa el singular con un solo intento', () => {
+    const texto = resumenCompartible({ intentos: [comparar(goku, goku)] })
+    expect(texto.split('\n')[0]).toContain('1 intento')
+    expect(texto).not.toContain('1 intentos')
+  })
+
+  it('anade la tematica a la cabecera cuando hay etiqueta', () => {
+    const texto = resumenCompartible({ intentos: dosIntentos(), etiqueta: 'One Piece' })
+    expect(texto.split('\n')[0]).toContain('Animedle One Piece #')
+  })
+
+  it('no anade nada a la cabecera sin etiqueta', () => {
+    const texto = resumenCompartible({ intentos: dosIntentos() })
+    expect(texto.split('\n')[0]).toMatch(/^Animedle #\d+/)
+  })
+})
+
+describe('mensajeDeVictoria', () => {
+  it('cambia segun los intentos y nunca esta vacio', () => {
+    const uno = mensajeDeVictoria(1)
+    expect(uno).toContain('primera')
+    expect(mensajeDeVictoria(3)).not.toBe(uno)
+    for (const n of [1, 2, 3, 5, 8, 12, 30]) {
+      expect(mensajeDeVictoria(n).length).toBeGreaterThan(0)
+    }
   })
 })
 

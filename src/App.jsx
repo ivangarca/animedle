@@ -4,79 +4,70 @@ import Tabla from './componentes/Tabla.jsx'
 import PanelFinal from './componentes/PanelFinal.jsx'
 import Menu from './componentes/Menu.jsx'
 import { PERSONAJES } from './datos/personajes.js'
-import {
-  MAX_INTENTOS,
-  comparar,
-  numeroDelDia,
-  personajeAleatorio,
-  personajeDelDia,
-} from './logica/juego.js'
-import {
-  TODOS,
-  nombreDeColeccion,
-  personajesDe,
-} from './logica/colecciones.js'
-import { leerEstadisticas, registrarPartida } from './logica/estadisticas.js'
+import { comparar, numeroDelDia, personajeDelDia } from './logica/juego.js'
+import { TODOS, nombreDeColeccion, personajesDe } from './logica/colecciones.js'
+import { leerEstadisticas, registrarReto } from './logica/estadisticas.js'
+import { completadaHoy, guardarResultado, leerProgreso } from './logica/progreso.js'
 
 export default function App() {
   // null = estamos en el menu. Cualquier otro valor = partida en marcha.
   const [coleccion, setColeccion] = useState(null)
-  const [modoLibre, setModoLibre] = useState(false)
   const [objetivo, setObjetivo] = useState(null)
   const [intentos, setIntentos] = useState([])
   const [estadisticas, setEstadisticas] = useState(() => leerEstadisticas())
+  const [progreso, setProgreso] = useState(() => leerProgreso())
 
   // Personajes con los que se juega y entre los que se busca.
   const personajes = useMemo(() => personajesDe(coleccion), [coleccion])
 
-  const gano = intentos.some((i) => i.acertado)
-  const terminado = gano || intentos.length >= MAX_INTENTOS
+  // Se juega hasta acertar: no hay limite de intentos.
+  const acertado = intentos.some((i) => i.acertado)
 
   const usados = useMemo(
     () => new Set(intentos.map((i) => i.personaje.n)),
     [intentos],
   )
 
-  /** Empieza el reto diario de una coleccion. */
-  const empezar = useCallback((id) => {
-    const lista = personajesDe(id)
-    setColeccion(id)
-    setModoLibre(false)
-    setObjetivo(personajeDelDia(lista, new Date(), `:${id}`))
-    setIntentos([])
-  }, [])
+  const empezar = useCallback(
+    (id) => {
+      // Cinturon y tirantes: el menu ya deshabilita las hechas, pero si el
+      // dia cambia con la pestana abierta esto evita repetir una coleccion.
+      if (completadaHoy(progreso, id)) return
+
+      const lista = personajesDe(id)
+      setColeccion(id)
+      setObjetivo(personajeDelDia(lista, new Date(), `:${id}`))
+      setIntentos([])
+    },
+    [progreso],
+  )
 
   const volverAlMenu = useCallback(() => {
+    setProgreso(leerProgreso())
     setColeccion(null)
     setObjetivo(null)
     setIntentos([])
-    setModoLibre(false)
   }, [])
-
-  const empezarModoLibre = useCallback(() => {
-    setModoLibre(true)
-    setObjetivo(personajeAleatorio(personajes))
-    setIntentos([])
-  }, [personajes])
 
   const intentar = useCallback(
     (personaje) => {
-      if (terminado || usados.has(personaje.n)) return
+      if (acertado || usados.has(personaje.n)) return
 
       const resultado = comparar(personaje, objetivo)
       const siguientes = [...intentos, resultado]
       setIntentos(siguientes)
 
-      // Solo cuenta para la racha el reto diario con todos los personajes:
-      // si contasen las tematicas, la racha no significaria nada.
-      const acabaAhora = resultado.acertado || siguientes.length >= MAX_INTENTOS
-      if (acabaAhora && !modoLibre && coleccion === TODOS) {
-        setEstadisticas(
-          registrarPartida({ gano: resultado.acertado, intentos: siguientes.length }),
+      if (resultado.acertado) {
+        setEstadisticas(registrarReto({ intentos: siguientes.length }))
+        setProgreso(
+          guardarResultado(coleccion, {
+            intentos: siguientes.length,
+            personaje: objetivo.n,
+          }),
         )
       }
     },
-    [terminado, usados, objetivo, intentos, modoLibre, coleccion],
+    [acertado, usados, objetivo, intentos, coleccion],
   )
 
   return (
@@ -91,7 +82,7 @@ export default function App() {
       </header>
 
       {!coleccion ? (
-        <Menu personajes={PERSONAJES} onElegir={empezar} />
+        <Menu personajes={PERSONAJES} progreso={progreso} onElegir={empezar} />
       ) : (
         <>
           <div className="barra">
@@ -105,26 +96,22 @@ export default function App() {
             personajes={personajes}
             usados={usados}
             onElegir={intentar}
-            deshabilitado={terminado}
+            deshabilitado={acertado}
           />
 
-          {!terminado && (
-            <p className="contador">
-              Intento {intentos.length + 1} de {MAX_INTENTOS}
-              {modoLibre ? ' · modo libre' : ` · reto diario #${numeroDelDia()}`}
-            </p>
+          {!acertado && (
+            <p className="contador">Reto diario #{numeroDelDia()}</p>
           )}
 
           <Tabla intentos={intentos} />
 
-          {terminado && (
+          {acertado && (
             <PanelFinal
-              gano={gano}
               objetivo={objetivo}
               intentos={intentos}
-              modoLibre={modoLibre || coleccion !== TODOS}
+              etiqueta={coleccion === TODOS ? '' : coleccion}
               estadisticas={estadisticas}
-              onModoLibre={empezarModoLibre}
+              onVolver={volverAlMenu}
             />
           )}
         </>

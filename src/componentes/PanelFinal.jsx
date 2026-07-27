@@ -1,18 +1,18 @@
 import { useState } from 'react'
-import { MAX_INTENTOS, resumenCompartible } from '../logica/juego.js'
-import { porcentajeAcierto } from '../logica/estadisticas.js'
+import Confeti from './Confeti.jsx'
+import { mensajeDeVictoria, resumenCompartible } from '../logica/juego.js'
+import { mediaDeIntentos } from '../logica/estadisticas.js'
 
-/** Panel que aparece al terminar: resultado, estadisticas y compartir. */
+/** Panel que aparece al acertar: mensaje, estadisticas y compartir. */
 export default function PanelFinal({
-  gano,
   objetivo,
   intentos,
-  modoLibre,
+  etiqueta,
   estadisticas,
-  onModoLibre,
+  onVolver,
 }) {
   const [copiado, setCopiado] = useState(false)
-  const resumen = resumenCompartible({ intentos, gano, modoLibre })
+  const resumen = resumenCompartible({ intentos, etiqueta })
 
   async function copiar() {
     try {
@@ -25,52 +25,47 @@ export default function PanelFinal({
   }
 
   return (
-    <div className="panel">
-      <h2>{gano ? '¡Correcto!' : 'Se acabaron los intentos'}</h2>
+    <>
+      <Confeti />
 
-      <p>
-        {gano ? (
-          <>
-            Lo has sacado en <b>{intentos.length}</b> de {MAX_INTENTOS} intentos.
-          </>
-        ) : (
-          <>
-            Era <b>{objetivo.n}</b> ({objetivo.serie}).
-          </>
-        )}
-      </p>
+      <div className="panel ganado">
+        <h2>{mensajeDeVictoria(intentos.length)}</h2>
 
-      {!modoLibre && (
+        <p>
+          <b>{objetivo.n}</b> en {intentos.length}{' '}
+          {intentos.length === 1 ? 'intento' : 'intentos'}.
+        </p>
+
         <div className="estadisticas">
           <div>
-            <strong>{estadisticas.partidas}</strong>
-            <span>jugadas</span>
+            <strong>{estadisticas.retos}</strong>
+            <span>retos</span>
           </div>
           <div>
-            <strong>{porcentajeAcierto(estadisticas)}%</strong>
-            <span>acierto</span>
+            <strong>{mediaDeIntentos(estadisticas)}</strong>
+            <span>media</span>
+          </div>
+          <div>
+            <strong>{estadisticas.mejorPartida ?? '—'}</strong>
+            <span>récord</span>
           </div>
           <div>
             <strong>{estadisticas.racha}</strong>
             <span>racha</span>
           </div>
-          <div>
-            <strong>{estadisticas.mejorRacha}</strong>
-            <span>mejor</span>
-          </div>
         </div>
-      )}
 
-      <pre className="compartir">{resumen}</pre>
+        <pre className="compartir">{resumen}</pre>
 
-      <div className="botones">
-        <button onClick={copiar}>{copiado ? 'Copiado' : 'Copiar resultado'}</button>
-        <button className="sec" onClick={onModoLibre}>
-          Jugar en modo libre
-        </button>
+        <div className="botones">
+          <button onClick={copiar}>{copiado ? 'Copiado' : 'Copiar resultado'}</button>
+          <button className="sec" onClick={onVolver}>
+            Volver al menú
+          </button>
+        </div>
+
+        <p className="nota">Esta temática vuelve a las 00:00.</p>
       </div>
-
-      {!modoLibre && <p className="nota">Mañana hay personaje nuevo.</p>}
-    </div>
+    </>
   )
 }

@@ -20,7 +20,10 @@ export default function Tabla({ intentos }) {
       </div>
 
       {[...intentos].reverse().map((intento) => (
-        <div className="fila" key={intento.personaje.n}>
+        <div
+          className={`fila ${intento.acertado ? 'acertada' : ''}`}
+          key={intento.personaje.n}
+        >
           <div className="celda nombre" style={estiloDeSerie(intento.personaje.serie)}>
             {intento.personaje.n}
           </div>
