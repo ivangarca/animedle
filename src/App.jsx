@@ -3,19 +3,25 @@ import Buscador from './componentes/Buscador.jsx'
 import Tabla from './componentes/Tabla.jsx'
 import PanelFinal from './componentes/PanelFinal.jsx'
 import Menu from './componentes/Menu.jsx'
+import Tienda from './componentes/Tienda.jsx'
+import Coleccion from './componentes/Coleccion.jsx'
 import { PERSONAJES } from './datos/personajes.js'
 import { comparar, numeroDelDia, personajeDelDia } from './logica/juego.js'
 import { TODOS, nombreDeColeccion, personajesDe } from './logica/colecciones.js'
 import { leerEstadisticas, registrarReto } from './logica/estadisticas.js'
 import { completadaHoy, guardarResultado, leerProgreso } from './logica/progreso.js'
+import { anadirMonedas, leerCartera } from './logica/cartera.js'
+import { MONEDAS_POR_ACIERTO } from './logica/cartas.js'
 
 export default function App() {
-  // null = estamos en el menu. Cualquier otro valor = partida en marcha.
+  // 'menu' | 'juego' | 'tienda' | 'coleccion'
+  const [vista, setVista] = useState('menu')
   const [coleccion, setColeccion] = useState(null)
   const [objetivo, setObjetivo] = useState(null)
   const [intentos, setIntentos] = useState([])
   const [estadisticas, setEstadisticas] = useState(() => leerEstadisticas())
   const [progreso, setProgreso] = useState(() => leerProgreso())
+  const [cartera, setCartera] = useState(() => leerCartera())
 
   // Personajes con los que se juega y entre los que se busca.
   const personajes = useMemo(() => personajesDe(coleccion), [coleccion])
@@ -34,10 +40,10 @@ export default function App() {
       // dia cambia con la pestana abierta esto evita repetir una coleccion.
       if (completadaHoy(progreso, id)) return
 
-      const lista = personajesDe(id)
       setColeccion(id)
-      setObjetivo(personajeDelDia(lista, new Date(), `:${id}`))
+      setObjetivo(personajeDelDia(personajesDe(id), new Date(), `:${id}`))
       setIntentos([])
+      setVista('juego')
     },
     [progreso],
   )
@@ -47,6 +53,7 @@ export default function App() {
     setColeccion(null)
     setObjetivo(null)
     setIntentos([])
+    setVista('menu')
   }, [])
 
   const intentar = useCallback(
@@ -65,6 +72,7 @@ export default function App() {
             personaje: objetivo.n,
           }),
         )
+        setCartera(anadirMonedas(MONEDAS_POR_ACIERTO))
       }
     },
     [acertado, usados, objetivo, intentos, coleccion],
@@ -81,9 +89,42 @@ export default function App() {
         </p>
       </header>
 
-      {!coleccion ? (
-        <Menu personajes={PERSONAJES} progreso={progreso} onElegir={empezar} />
-      ) : (
+      {vista === 'menu' && (
+        <>
+          <div className="acciones">
+            <span className="monedas">{cartera.monedas} monedas</span>
+            <div>
+              <button className="sec" onClick={() => setVista('tienda')}>
+                Tienda
+              </button>
+              <button className="sec" onClick={() => setVista('coleccion')}>
+                Colección
+              </button>
+            </div>
+          </div>
+
+          <Menu personajes={PERSONAJES} progreso={progreso} onElegir={empezar} />
+        </>
+      )}
+
+      {vista === 'tienda' && (
+        <Tienda
+          personajes={PERSONAJES}
+          cartera={cartera}
+          onCartera={setCartera}
+          onVolver={() => setVista('menu')}
+        />
+      )}
+
+      {vista === 'coleccion' && (
+        <Coleccion
+          personajes={PERSONAJES}
+          cartera={cartera}
+          onVolver={() => setVista('menu')}
+        />
+      )}
+
+      {vista === 'juego' && (
         <>
           <div className="barra">
             <button className="volver" onClick={volverAlMenu}>
@@ -99,9 +140,7 @@ export default function App() {
             deshabilitado={acertado}
           />
 
-          {!acertado && (
-            <p className="contador">Reto diario #{numeroDelDia()}</p>
-          )}
+          {!acertado && <p className="contador">Reto diario #{numeroDelDia()}</p>}
 
           <Tabla intentos={intentos} />
 
