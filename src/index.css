@@ -130,9 +130,10 @@ h1 span {
 
 .fila {
   display: grid;
-  grid-template-columns: 1.5fr 1.2fr 0.8fr 0.9fr 1.2fr 1.3fr 0.9fr;
+  /* nombre · serie · temporada · año · rol · afiliación · poder · género */
+  grid-template-columns: 1.4fr 1.2fr 1.2fr 0.7fr 0.9fr 1.2fr 1.3fr 0.9fr;
   gap: 6px;
-  min-width: 780px;
+  min-width: 900px;
   margin-bottom: 6px;
 }
 
@@ -333,6 +334,7 @@ footer {
 .fila.acertada .celda:nth-child(5) { animation-delay: 0.24s; }
 .fila.acertada .celda:nth-child(6) { animation-delay: 0.3s; }
 .fila.acertada .celda:nth-child(7) { animation-delay: 0.36s; }
+.fila.acertada .celda:nth-child(8) { animation-delay: 0.42s; }
 
 @keyframes saltar {
   0% { transform: scale(1); }

@@ -10,9 +10,13 @@ import { normalizar } from './busqueda.js'
  * El limite llegara con el modo dificil.
  */
 
+/** Valor que significa "dato no disponible", no un valor real. */
+export const SIN_DATO = '-'
+
 /** Columnas del modo clasico, en orden. */
 export const COLUMNAS = [
   { clave: 'serie', etiqueta: 'Serie' },
+  { clave: 'temporada', etiqueta: 'Temporada' },
   { clave: 'anio', etiqueta: 'Año' },
   { clave: 'rol', etiqueta: 'Rol' },
   { clave: 'afi', etiqueta: 'Afiliación' },
@@ -108,6 +112,12 @@ export function comparar(personaje, objetivo) {
         flecha: diferencia === 0 ? null : diferencia > 0 ? '↑' : '↓',
         estado,
       }
+    }
+
+    // Un '-' en temporada significa "no lo se", no un valor compartido.
+    // Pintarlo verde seria mentir: diria "coincidis" cuando no hay dato.
+    if (clave === 'temporada' && (valor === SIN_DATO || esperado === SIN_DATO)) {
+      return { clave, texto: String(valor), flecha: null, estado: 'no' }
     }
 
     const permiteCasi = clave === 'afi' || clave === 'poder'

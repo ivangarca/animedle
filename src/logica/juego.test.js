@@ -14,6 +14,8 @@ import {
   numeroDelDia,
   resumenCompartible,
   mensajeDeVictoria,
+  COLUMNAS,
+  SIN_DATO,
 } from './juego.js'
 import { PERSONAJES } from '../datos/personajes.js'
 
@@ -86,11 +88,18 @@ describe('comparar', () => {
   })
 
   it('reconoce la serie compartida y distingue el rol', () => {
-    const { celdas } = comparar(vegeta, goku)
+    const raditz = buscarNombre('Raditz')
+    const { celdas } = comparar(raditz, goku)
     const porClave = Object.fromEntries(celdas.map((c) => [c.clave, c]))
     expect(porClave.serie.estado).toBe('ok')
-    expect(porClave.rol.estado).toBe('no') // Rival vs Protagonista
+    expect(porClave.rol.estado).toBe('no') // Antagonista vs Protagonista
     expect(porClave.gen.estado).toBe('ok')
+  })
+
+  it('marca en verde el rol cuando coincide', () => {
+    // Vegeta y Goku estan los dos como Protagonista en el dataset.
+    const rol = comparar(vegeta, goku).celdas.find((c) => c.clave === 'rol')
+    expect(rol.estado).toBe('ok')
   })
 
   it('apunta la flecha del año hacia la respuesta', () => {
@@ -101,7 +110,23 @@ describe('comparar', () => {
   })
 
   it('devuelve una celda por columna', () => {
-    expect(comparar(naruto, goku).celdas).toHaveLength(6)
+    expect(comparar(naruto, goku).celdas).toHaveLength(COLUMNAS.length)
+  })
+
+  it('reconoce la temporada compartida dentro de una saga', () => {
+    const raditz = buscarNombre('Raditz')
+    const nappa = buscarNombre('Nappa')
+    const temporada = comparar(raditz, nappa).celdas.find((c) => c.clave === 'temporada')
+    expect(temporada.estado).toBe('ok') // los dos son de la Saga Saiyan
+  })
+
+  it('nunca pinta en verde una temporada sin dato', () => {
+    const luffy = buscarNombre('Monkey D. Luffy')
+    const zoro = buscarNombre('Roronoa Zoro')
+    // Los dos tienen '-', pero eso significa "no se sabe", no "coinciden".
+    const temporada = comparar(luffy, zoro).celdas.find((c) => c.clave === 'temporada')
+    expect(temporada.texto).toBe(SIN_DATO)
+    expect(temporada.estado).toBe('no')
   })
 })
 
@@ -141,7 +166,7 @@ describe('resumenCompartible', () => {
 
     expect(lineas[0]).toContain('2 intentos')
     expect(lineas).toHaveLength(3) // cabecera + 2 intentos
-    expect(lineas[2]).toBe('🟩🟩🟩🟩🟩🟩')
+    expect(lineas[2]).toBe('🟩'.repeat(COLUMNAS.length))
   })
 
   it('usa el singular con un solo intento', () => {
@@ -183,9 +208,16 @@ describe('integridad del dataset', () => {
       expect(typeof p.n).toBe('string')
       expect(Array.isArray(p.a)).toBe(true)
       expect(typeof p.anio).toBe('number')
-      for (const campo of ['serie', 'rol', 'afi', 'poder', 'gen']) {
+      for (const campo of ['serie', 'temporada', 'rol', 'afi', 'poder', 'gen']) {
         expect(p[campo], `${p.n} sin ${campo}`).toBeTruthy()
       }
     }
+  })
+
+  it('todos los personajes de Dragon Ball tienen temporada', () => {
+    const sinTemporada = PERSONAJES.filter(
+      (p) => p.serie === 'Dragon Ball' && p.temporada === SIN_DATO,
+    )
+    expect(sinTemporada.map((p) => p.n)).toEqual([])
   })
 })
