@@ -17,7 +17,13 @@
  */
 import { COSTE_SOBRE, abrirSobre, claveCarta } from './cartas.js'
 
-const CLAVE = 'animedle:cartera:v1'
+/*
+ * v2: al pasar de tres rarezas a dos, las cartas guardadas con la rareza
+ * antigua ya no existen. Subir el numero de version descarta los datos
+ * viejos en lugar de arrastrar basura que la interfaz no sabe dibujar.
+ * Es la forma mas simple de migrar cuando los datos no valen dinero.
+ */
+const CLAVE = 'animedle:cartera:v2'
 
 const INICIAL = {
   monedas: 0,

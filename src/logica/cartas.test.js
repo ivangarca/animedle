@@ -13,9 +13,11 @@ import {
   CARTAS_POR_SOBRE,
   ORDEN_RAREZAS,
   RAREZAS,
+  RAREZA_ESPECIAL,
   SOBRES_PARA_GARANTIA,
   abrirSobre,
   claveCarta,
+  probabilidadPorSobre,
   sortearRareza,
   totalDeCartas,
 } from './cartas.js'
@@ -28,13 +30,19 @@ describe('probabilidades declaradas', () => {
   })
 })
 
+describe('rarezas', () => {
+  it('solo la dorada muestra imagen', () => {
+    expect(RAREZAS.azul.muestraImagen).toBe(false)
+    expect(RAREZAS.amarillo.muestraImagen).toBe(true)
+  })
+})
+
 describe('sortearRareza', () => {
   it('reparte el intervalo 0-1 en tramos por rareza', () => {
     expect(sortearRareza(0)).toBe('azul')
-    expect(sortearRareza(0.69)).toBe('azul')
-    expect(sortearRareza(0.71)).toBe('lila')
-    expect(sortearRareza(0.94)).toBe('lila')
-    expect(sortearRareza(0.96)).toBe('amarillo')
+    expect(sortearRareza(0.5)).toBe('azul')
+    expect(sortearRareza(0.79)).toBe('azul')
+    expect(sortearRareza(0.81)).toBe('amarillo')
     expect(sortearRareza(0.999)).toBe('amarillo')
   })
 
@@ -73,7 +81,7 @@ describe('abrirSobre', () => {
 describe('las tasas de drop convergen al diseno', () => {
   it('en 100.000 sobres cada rareza sale con su probabilidad', () => {
     const SOBRES = 100000
-    const cuenta = { azul: 0, lila: 0, amarillo: 0 }
+    const cuenta = { azul: 0, amarillo: 0 }
 
     // Generador congruencial lineal: deterministico y bien repartido,
     // asi el test no falla un dia por mala suerte.
@@ -102,7 +110,20 @@ describe('las tasas de drop convergen al diseno', () => {
   })
 })
 
-describe('garantia de legendaria (pity)', () => {
+describe('probabilidadPorSobre', () => {
+  it('calcula la posibilidad de al menos una en el sobre', () => {
+    // 1 - 0.8^3 = 0.488
+    expect(probabilidadPorSobre('amarillo')).toBeCloseTo(0.488, 3)
+  })
+
+  it('es mayor que la probabilidad por carta', () => {
+    expect(probabilidadPorSobre('amarillo')).toBeGreaterThan(
+      RAREZAS.amarillo.probabilidad,
+    )
+  })
+})
+
+describe('garantia de dorada (pity)', () => {
   it('fuerza una legendaria al llegar al limite', () => {
     // Generador que nunca daria legendaria por azar.
     const sinSuerte = () => 0

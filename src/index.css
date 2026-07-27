@@ -1,16 +1,24 @@
+/*
+ * Tema claro azul.
+ *
+ * Al cambiar de fondo oscuro a fondo claro NO basta con cambiar --bg:
+ * hay que invertir tambien el texto y los grises, o queda ilegible.
+ * Por eso todo el color esta en variables y no repartido por el archivo:
+ * el tema entero se cambia aqui, en catorce lineas.
+ */
 :root {
-  --bg: #0e1117;
-  --panel: #161b26;
-  --panel2: #1d2330;
-  --linea: #2a3141;
-  --texto: #e6e9ef;
-  --suave: #8b93a5;
-  --ok: #2e9e5b;
-  --casi: #c99a2e;
-  --no: #a13c3c;
-  --acento: #7c5cff;
+  --bg: #dbeafe; /* azul claro */
+  --panel: #ffffff;
+  --panel2: #eff6ff;
+  --linea: #b9d5f7;
+  --texto: #10233d;
+  --suave: #5b7290;
+  --ok: #1f9254;
+  --casi: #c08a1e;
+  --no: #c0392b;
+  --acento: #4338ca;
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 * {
@@ -146,6 +154,7 @@ h1 span {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.6px;
+  animation: none;
 }
 
 .celda {
@@ -156,8 +165,11 @@ h1 span {
   min-height: 54px;
   padding: 10px 8px;
   background: var(--no);
-  border: 1px solid var(--linea);
+  border: 1px solid var(--no);
   border-radius: 8px;
+  /* Verde, amarillo y rojo son colores fuertes: el texto va en blanco
+     independientemente de si el tema es claro u oscuro. */
+  color: #fff;
   font-size: 13px;
   text-align: center;
   animation: aparecer 0.25s ease-out;
@@ -175,6 +187,8 @@ h1 span {
 
 .celda.nombre {
   background: var(--panel2);
+  border-color: var(--linea);
+  color: var(--texto);
   font-weight: 600;
 }
 
@@ -392,6 +406,63 @@ footer {
   }
 }
 
+/* ---------- retratos ---------- */
+
+.retrato {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--panel2);
+  flex-shrink: 0;
+}
+
+.retrato.normal {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  margin-bottom: 8px;
+}
+
+.retrato.mini {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+}
+
+.retrato img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Avatar de reserva cuando el personaje no tiene imagen. */
+.retrato-iniciales {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.retrato.normal .retrato-iniciales {
+  font-size: 30px;
+}
+
+.retrato.mini .retrato-iniciales {
+  font-size: 12px;
+}
+
+/* Cartas sin conseguir: silueta negra. */
+.retrato.silueta img,
+.retrato.silueta .retrato-iniciales {
+  filter: brightness(0);
+  opacity: 0.45;
+}
+
 /* ---------- tienda y coleccion ---------- */
 
 .pantalla {
@@ -543,10 +614,33 @@ button:disabled:hover {
   top: 10px;
   right: 10px;
   padding: 1px 6px;
-  background: rgb(0 0 0 / 35%);
+  background: rgb(0 0 0 / 45%);
   border-radius: 20px;
+  color: #fff;
   font-size: 11px;
   font-weight: 700;
+}
+
+/* Carta azul: en lugar del retrato, una placa con el nombre. */
+.carta-placa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 4;
+  margin-bottom: 8px;
+  padding: 10px;
+  background: var(--panel);
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Las doradas conseguidas brillan un poco. */
+.carta.rareza-amarillo:not(.vacia) {
+  box-shadow: 0 0 0 1px #e6a01066, 0 6px 20px #e6a01033;
 }
 
 .carta.vacia {

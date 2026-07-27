@@ -7,6 +7,7 @@ import {
   ORDEN_RAREZAS,
   RAREZAS,
   SOBRES_PARA_GARANTIA,
+  probabilidadPorSobre,
 } from '../logica/cartas.js'
 import { comprarSobre } from '../logica/cartera.js'
 
@@ -56,11 +57,16 @@ export default function Tienda({ personajes, cartera, onCartera, onVolver }) {
           ))}
         </ul>
 
+        <p className="fino">
+          Probabilidad por carta. Un sobre trae al menos una dorada el{' '}
+          {Math.round(probabilidadPorSobre('amarillo') * 100)}% de las veces.
+        </p>
+
         {sobresParaGarantia <= SOBRES_PARA_GARANTIA && cartera.sobresAbiertos > 0 && (
           <p className="garantia">
             {sobresParaGarantia <= 1
-              ? 'El próximo sobre trae legendaria garantizada'
-              : `Legendaria garantizada en ${sobresParaGarantia} sobres`}
+              ? 'El próximo sobre trae dorada garantizada'
+              : `Dorada garantizada en ${sobresParaGarantia} sobres`}
           </p>
         )}
       </div>

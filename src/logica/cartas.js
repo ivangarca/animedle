@@ -1,6 +1,13 @@
 /**
  * Cartas, rarezas y apertura de sobres.
  *
+ * DISENO
+ *   Cada personaje tiene DOS cartas:
+ *     - azul     -> solo el nombre
+ *     - amarillo -> el retrato del personaje
+ *   La imagen es la recompensa. Por eso la rareza no es un marco distinto
+ *   sobre el mismo dibujo: es que la carta buena te ensena al personaje.
+ *
  * Todo lo de aqui son funciones puras. Fijate en que `abrirSobre` recibe
  * la funcion de aleatoriedad como parametro (`aleatorio`) en vez de llamar
  * a Math.random por su cuenta. Eso permite:
@@ -19,20 +26,38 @@ export const MONEDAS_POR_ACIERTO = 100
 export const CARTAS_POR_SOBRE = 3
 
 /**
- * Sobres seguidos sin legendaria tras los cuales se garantiza una.
+ * Sobres seguidos sin dorada tras los cuales se garantiza una.
  * En los gacha esto se llama "pity": evita que un jugador con mala
  * suerte se harte y lo deje.
+ *
+ * Con 20% por carta, la probabilidad de que un sobre no traiga dorada es
+ * 0.8^3 = 51%. Encadenar seis asi es un 1,8%: raro, pero le pasa a
+ * alguien. La garantia esta para ese alguien.
  */
-export const SOBRES_PARA_GARANTIA = 10
+export const SOBRES_PARA_GARANTIA = 6
 
 export const RAREZAS = {
-  azul: { id: 'azul', nombre: 'Común', color: '#3498db', probabilidad: 0.7 },
-  lila: { id: 'lila', nombre: 'Rara', color: '#9b59b6', probabilidad: 0.25 },
-  amarillo: { id: 'amarillo', nombre: 'Legendaria', color: '#f1c40f', probabilidad: 0.05 },
+  azul: {
+    id: 'azul',
+    nombre: 'Común',
+    color: '#3498db',
+    probabilidad: 0.8,
+    muestraImagen: false,
+  },
+  amarillo: {
+    id: 'amarillo',
+    nombre: 'Dorada',
+    color: '#e6a010',
+    probabilidad: 0.2,
+    muestraImagen: true,
+  },
 }
 
 /** De menos a mas valiosa. */
-export const ORDEN_RAREZAS = ['azul', 'lila', 'amarillo']
+export const ORDEN_RAREZAS = ['azul', 'amarillo']
+
+/** La rareza mas alta, la que dispara la garantia. */
+export const RAREZA_ESPECIAL = 'amarillo'
 
 /** Identificador unico de una carta: mismo personaje, distinta rareza. */
 export function claveCarta(nombrePersonaje, rareza) {
@@ -65,24 +90,34 @@ export function abrirSobre({ personajes, sobresSinLegendaria = 0, aleatorio = Ma
 
   for (let i = 0; i < CARTAS_POR_SOBRE; i++) {
     const esUltima = i === CARTAS_POR_SOBRE - 1
-    const yaHayLegendaria = cartas.some((c) => c.rareza === 'amarillo')
-    const forzarLegendaria = tocaGarantia && esUltima && !yaHayLegendaria
+    const yaHayEspecial = cartas.some((c) => c.rareza === RAREZA_ESPECIAL)
+    const forzarEspecial = tocaGarantia && esUltima && !yaHayEspecial
 
-    const rareza = forzarLegendaria ? 'amarillo' : sortearRareza(aleatorio())
+    const rareza = forzarEspecial ? RAREZA_ESPECIAL : sortearRareza(aleatorio())
     const personaje = personajes[Math.floor(aleatorio() * personajes.length)]
 
     cartas.push({ personaje, rareza })
   }
 
-  const salioLegendaria = cartas.some((c) => c.rareza === 'amarillo')
+  const salioEspecial = cartas.some((c) => c.rareza === RAREZA_ESPECIAL)
 
   return {
     cartas,
-    sobresSinLegendaria: salioLegendaria ? 0 : sobresSinLegendaria + 1,
+    sobresSinLegendaria: salioEspecial ? 0 : sobresSinLegendaria + 1,
   }
 }
 
 /** Cuantas cartas distintas existen en total. */
 export function totalDeCartas(personajes) {
   return personajes.length * ORDEN_RAREZAS.length
+}
+
+/**
+ * Probabilidad de que un sobre traiga al menos una carta de esa rareza.
+ * Se muestra en la tienda: es mas util para el jugador que la
+ * probabilidad por carta, que nadie sabe interpretar.
+ */
+export function probabilidadPorSobre(rareza) {
+  const p = RAREZAS[rareza].probabilidad
+  return 1 - Math.pow(1 - p, CARTAS_POR_SOBRE)
 }

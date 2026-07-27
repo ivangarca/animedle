@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import Retrato from './Retrato.jsx'
 import { buscar } from '../logica/busqueda.js'
 
 /**
@@ -84,6 +85,7 @@ export default function Buscador({ personajes, usados, onElegir, deshabilitado }
               onMouseEnter={() => setSeleccionado(i)}
               onClick={() => elegir(p)}
             >
+              <Retrato personaje={p} tamano="mini" />
               {p.n}
               <small>{p.serie}</small>
             </li>

@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
-const COLORES = ['#7c5cff', '#2e9e5b', '#c99a2e', '#e74c3c', '#3498db', '#e6e9ef']
+// Sin blancos ni tonos muy claros: sobre el fondo azul claro no se verian.
+const COLORES = ['#4338ca', '#1f9254', '#e6a010', '#e74c3c', '#0ea5e9', '#9b59b6']
 
 /**
  * Lluvia de confeti, sin librerias.

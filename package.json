@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "datos": "node scripts/descargar-personajes.mjs"
+    "datos": "node scripts/descargar-personajes.mjs",
+    "imagenes": "node scripts/anadir-imagenes.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

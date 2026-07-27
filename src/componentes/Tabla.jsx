@@ -1,3 +1,4 @@
+import Retrato from './Retrato.jsx'
 import { COLUMNAS } from '../logica/juego.js'
 import { estiloDeSerie } from '../datos/series.js'
 
@@ -25,7 +26,8 @@ export default function Tabla({ intentos }) {
           key={intento.personaje.n}
         >
           <div className="celda nombre" style={estiloDeSerie(intento.personaje.serie)}>
-            {intento.personaje.n}
+            <Retrato personaje={intento.personaje} tamano="mini" />
+            <span>{intento.personaje.n}</span>
           </div>
           {intento.celdas.map((celda) => (
             <div className={`celda ${celda.estado}`} key={celda.clave}>
