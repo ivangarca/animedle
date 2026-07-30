@@ -26,7 +26,7 @@ export default function Coleccion({ personajes, cartera, onVolver }) {
         <button className="volver" onClick={onVolver}>
           ← Menú
         </button>
-        <span className="monedas">
+        <span className="pill">
           {conseguidas} / {total} · {porcentaje}%
         </span>
       </div>

@@ -31,7 +31,7 @@ export default function Tienda({ personajes, cartera, onCartera, onVolver }) {
         <button className="volver" onClick={onVolver}>
           ← Menú
         </button>
-        <span className="monedas">{cartera.monedas} monedas</span>
+        <span className="pill monedas">{cartera.monedas}</span>
       </div>
 
       <div className="sobre">

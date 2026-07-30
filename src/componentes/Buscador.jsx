@@ -61,6 +61,7 @@ export default function Buscador({ personajes, usados, onElegir, deshabilitado }
 
   return (
     <div className="buscador" ref={contenedor}>
+      <span className="icono-buscar" aria-hidden="true" />
       <input
         type="text"
         value={texto}

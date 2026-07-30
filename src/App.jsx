@@ -6,10 +6,20 @@ import Menu from './componentes/Menu.jsx'
 import Tienda from './componentes/Tienda.jsx'
 import Coleccion from './componentes/Coleccion.jsx'
 import { PERSONAJES } from './datos/personajes.js'
-import { comparar, numeroDelDia, personajeDelDia } from './logica/juego.js'
+import {
+  comparar,
+  numeroDelDia,
+  personajeAleatorio,
+  personajeDelDia,
+} from './logica/juego.js'
 import { TODOS, nombreDeColeccion, personajesDe } from './logica/colecciones.js'
 import { leerEstadisticas, registrarReto } from './logica/estadisticas.js'
-import { bloqueadaHoy, guardarResultado, leerProgreso } from './logica/progreso.js'
+import {
+  UN_RETO_POR_DIA,
+  bloqueadaHoy,
+  guardarResultado,
+  leerProgreso,
+} from './logica/progreso.js'
 import { anadirMonedas, leerCartera } from './logica/cartera.js'
 import { MONEDAS_POR_ACIERTO } from './logica/cartas.js'
 
@@ -40,8 +50,18 @@ export default function App() {
       // dia cambia con la pestana abierta esto evita repetir una coleccion.
       if (bloqueadaHoy(progreso, id)) return
 
+      const lista = personajesDe(id)
+
+      // En modo pruebas el personaje es aleatorio en cada partida: si no,
+      // al repetir el mismo reto saldria siempre el mismo y no se puede
+      // probar nada. Con el interruptor en true vuelve el reto diario.
+      setObjetivo(
+        UN_RETO_POR_DIA
+          ? personajeDelDia(lista, new Date(), `:${id}`)
+          : personajeAleatorio(lista),
+      )
+
       setColeccion(id)
-      setObjetivo(personajeDelDia(personajesDe(id), new Date(), `:${id}`))
       setIntentos([])
       setVista('juego')
     },
@@ -92,7 +112,7 @@ export default function App() {
       {vista === 'menu' && (
         <>
           <div className="acciones">
-            <span className="monedas">{cartera.monedas} monedas</span>
+            <span className="pill monedas">{cartera.monedas}</span>
             <div>
               <button className="sec" onClick={() => setVista('tienda')}>
                 Tienda

@@ -71,16 +71,15 @@ function Tarjeta({ titulo, subtitulo, destacada, bloqueada, espera, color, onEle
       className={clases.join(' ')}
       disabled={bloqueada}
       onClick={onElegir}
-      style={
-        bloqueada
+      // `color` alimenta la franja lateral via currentColor en el CSS.
+      style={{
+        color,
+        background: bloqueada
           ? undefined
-          : {
-              background: `linear-gradient(135deg, ${color}33, var(--panel2))`,
-              borderColor: `${color}66`,
-            }
-      }
+          : `linear-gradient(120deg, ${color}1f, var(--panel) 55%)`,
+      }}
     >
-      <strong>{titulo}</strong>
+      <strong style={{ color: 'var(--texto)' }}>{titulo}</strong>
       {bloqueada ? (
         <span className="bloqueo">Hecha · vuelve en {espera}</span>
       ) : (
