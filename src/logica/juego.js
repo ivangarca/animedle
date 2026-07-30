@@ -13,16 +13,12 @@ import { normalizar } from './busqueda.js'
 /** Valor que significa "dato no disponible", no un valor real. */
 export const SIN_DATO = '-'
 
-/** Columnas del modo clasico, en orden. */
-export const COLUMNAS = [
-  { clave: 'serie', etiqueta: 'Serie' },
-  { clave: 'temporada', etiqueta: 'Temporada' },
-  { clave: 'anio', etiqueta: 'Año' },
-  { clave: 'rol', etiqueta: 'Rol' },
-  { clave: 'afi', etiqueta: 'Afiliación' },
-  { clave: 'poder', etiqueta: 'Poder' },
-  { clave: 'gen', etiqueta: 'Género' },
-]
+/*
+ * Que columnas se comparan lo decide `columnasDe()` en logica/columnas.js,
+ * porque depende de la coleccion con la que estes jugando. `comparar` las
+ * recibe como parametro: asi vale igual para la vista general, para una
+ * tematica con campos propios o para un modo que inventes mañana.
+ */
 
 /* ------------------------------------------------------------------ */
 /* Reto diario                                                         */
@@ -92,13 +88,31 @@ function compartenPalabra(a, b) {
  * estado: 'ok' (verde) | 'casi' (amarillo) | 'no' (rojo)
  *
  * El amarillo solo aparece donde tiene sentido: en el año cuando la
- * diferencia es pequena, y en afiliacion/poder cuando comparten algun
- * concepto. Si prefieres solo verde y rojo, pon casi = false y listo.
+ * diferencia es pequena, y en el poder cuando comparten algun concepto
+ * ("Ki / Artes marciales" y "Artes marciales", por ejemplo).
+ *
+ * @param {object} personaje  el que ha probado el jugador
+ * @param {object} objetivo   el personaje a adivinar
+ * @param {{clave: string}[]} columnas  que atributos comparar
  */
-export function comparar(personaje, objetivo) {
-  const celdas = COLUMNAS.map(({ clave }) => {
-    const valor = personaje[clave]
-    const esperado = objetivo[clave]
+export function comparar(personaje, objetivo, columnas) {
+  const celdas = columnas.map(({ clave }) => {
+    // Un campo que ese personaje no tiene cuenta como dato ausente.
+    const valor = personaje[clave] ?? SIN_DATO
+    const esperado = objetivo[clave] ?? SIN_DATO
+
+    // '-' significa "no se sabe", no un valor compartido. Pintarlo verde
+    // seria mentir: diria "coincidis" cuando no hay dato. Vale para
+    // cualquier columna, incluidos los campos propios de cada serie.
+    if (valor === SIN_DATO || esperado === SIN_DATO) {
+      return {
+        clave,
+        texto: String(valor),
+        flecha: null,
+        ayuda: 'Sin datos todavía',
+        estado: 'no',
+      }
+    }
 
     if (clave === 'anio') {
       const diferencia = esperado - valor
@@ -122,19 +136,7 @@ export function comparar(personaje, objetivo) {
       }
     }
 
-    // Un '-' en temporada significa "no lo se", no un valor compartido.
-    // Pintarlo verde seria mentir: diria "coincidis" cuando no hay dato.
-    if (clave === 'temporada' && (valor === SIN_DATO || esperado === SIN_DATO)) {
-      return {
-        clave,
-        texto: String(valor),
-        flecha: null,
-        ayuda: 'Temporada sin datos todavía',
-        estado: 'no',
-      }
-    }
-
-    const permiteCasi = clave === 'afi' || clave === 'poder'
+    const permiteCasi = clave === 'poder'
     let estado = 'no'
     if (valor === esperado) estado = 'ok'
     else if (permiteCasi && compartenPalabra(valor, esperado)) estado = 'casi'

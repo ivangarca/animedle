@@ -13,6 +13,7 @@ import {
   personajeDelDia,
 } from './logica/juego.js'
 import { TODOS, nombreDeColeccion, personajesDe } from './logica/colecciones.js'
+import { columnasDe } from './logica/columnas.js'
 import { leerEstadisticas, registrarReto } from './logica/estadisticas.js'
 import {
   UN_RETO_POR_DIA,
@@ -35,6 +36,10 @@ export default function App() {
 
   // Personajes con los que se juega y entre los que se busca.
   const personajes = useMemo(() => personajesDe(coleccion), [coleccion])
+
+  // Columnas de esta partida: las base, mas los campos propios de la serie
+  // si estamos en una tematica. Se detectan solas leyendo el dataset.
+  const columnas = useMemo(() => columnasDe(coleccion), [coleccion])
 
   // Se juega hasta acertar: no hay limite de intentos.
   const acertado = intentos.some((i) => i.acertado)
@@ -80,7 +85,7 @@ export default function App() {
     (personaje) => {
       if (acertado || usados.has(personaje.n)) return
 
-      const resultado = comparar(personaje, objetivo)
+      const resultado = comparar(personaje, objetivo, columnas)
       const siguientes = [...intentos, resultado]
       setIntentos(siguientes)
 
@@ -95,7 +100,7 @@ export default function App() {
         setCartera(anadirMonedas(MONEDAS_POR_ACIERTO))
       }
     },
-    [acertado, usados, objetivo, intentos, coleccion],
+    [acertado, usados, objetivo, intentos, coleccion, columnas],
   )
 
   return (
@@ -162,7 +167,7 @@ export default function App() {
 
           {!acertado && <p className="contador">Reto diario #{numeroDelDia()}</p>}
 
-          <Tabla intentos={intentos} />
+          <Tabla intentos={intentos} columnas={columnas} />
 
           {acertado && (
             <PanelFinal

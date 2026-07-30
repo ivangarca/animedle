@@ -8,18 +8,25 @@
 import { describe, it, expect } from 'vitest'
 import { normalizar, levenshtein, buscar } from './busqueda.js'
 import {
-  comparar,
+  comparar as compararCon,
   personajeDelDia,
   claveDelDia,
   numeroDelDia,
   resumenCompartible,
   mensajeDeVictoria,
-  COLUMNAS,
   SIN_DATO,
 } from './juego.js'
 import { PERSONAJES } from '../datos/personajes.js'
+import { columnasDe } from './columnas.js'
+import { TODOS } from './colecciones.js'
 
 const buscarNombre = (n) => PERSONAJES.find((p) => p.n === n)
+
+// Columnas de la vista general: las que se usan por defecto en los tests.
+const COLUMNAS = columnasDe(TODOS)
+
+/** comparar() con las columnas de la vista general si no se dice otra cosa. */
+const comparar = (a, b, columnas = COLUMNAS) => compararCon(a, b, columnas)
 
 describe('normalizar', () => {
   it('quita mayusculas, acentos y signos', () => {
@@ -135,7 +142,6 @@ describe('comparar', () => {
       serie: 'Serie X',
       anio: 2000,
       rol: 'Protagonista',
-      afi: 'Grupo',
       poder: 'Poder',
       gen: 'Masculino',
     }
@@ -227,7 +233,7 @@ describe('integridad del dataset', () => {
       expect(typeof p.n).toBe('string')
       expect(Array.isArray(p.a)).toBe(true)
       expect(typeof p.anio).toBe('number')
-      for (const campo of ['serie', 'temporada', 'rol', 'afi', 'poder', 'gen']) {
+      for (const campo of ['serie', 'temporada', 'rol', 'poder', 'gen']) {
         expect(p[campo], `${p.n} sin ${campo}`).toBeTruthy()
       }
     }
