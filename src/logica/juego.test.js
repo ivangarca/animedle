@@ -107,6 +107,13 @@ describe('comparar', () => {
     const anio = comparar(naruto, goku).celdas.find((c) => c.clave === 'anio')
     expect(anio.flecha).toBe('↓')
     expect(anio.estado).toBe('no')
+    expect(anio.ayuda).toContain('más antiguo')
+  })
+
+  it('apunta la flecha hacia arriba cuando la respuesta es mas nueva', () => {
+    const anio = comparar(goku, naruto).celdas.find((c) => c.clave === 'anio')
+    expect(anio.flecha).toBe('↑')
+    expect(anio.ayuda).toContain('más nuevo')
   })
 
   it('devuelve una celda por columna', () => {
@@ -121,10 +128,22 @@ describe('comparar', () => {
   })
 
   it('nunca pinta en verde una temporada sin dato', () => {
-    const luffy = buscarNombre('Monkey D. Luffy')
-    const zoro = buscarNombre('Roronoa Zoro')
+    // Personajes inventados en lugar de sacarlos del dataset: asi el test
+    // no se rompe cuando se van rellenando las temporadas de verdad.
+    const base = {
+      a: [],
+      serie: 'Serie X',
+      anio: 2000,
+      rol: 'Protagonista',
+      afi: 'Grupo',
+      poder: 'Poder',
+      gen: 'Masculino',
+    }
+    const uno = { ...base, n: 'Uno', temporada: SIN_DATO }
+    const otro = { ...base, n: 'Otro', temporada: SIN_DATO }
+
     // Los dos tienen '-', pero eso significa "no se sabe", no "coinciden".
-    const temporada = comparar(luffy, zoro).celdas.find((c) => c.clave === 'temporada')
+    const temporada = comparar(uno, otro).celdas.find((c) => c.clave === 'temporada')
     expect(temporada.texto).toBe(SIN_DATO)
     expect(temporada.estado).toBe('no')
   })

@@ -105,11 +105,19 @@ export function comparar(personaje, objetivo) {
       let estado = 'no'
       if (diferencia === 0) estado = 'ok'
       else if (Math.abs(diferencia) <= 5) estado = 'casi'
+
       return {
         clave,
         texto: String(valor),
-        // Flecha hacia donde esta la respuesta: mas nueva o mas antigua.
+        // La flecha apunta hacia la respuesta: arriba si es mas nueva.
         flecha: diferencia === 0 ? null : diferencia > 0 ? '↑' : '↓',
+        // Texto de ayuda, para que la flecha no haya que adivinarla.
+        ayuda:
+          diferencia === 0
+            ? 'Mismo año'
+            : diferencia > 0
+              ? 'El personaje del día es de un anime más nuevo'
+              : 'El personaje del día es de un anime más antiguo',
         estado,
       }
     }
@@ -117,7 +125,13 @@ export function comparar(personaje, objetivo) {
     // Un '-' en temporada significa "no lo se", no un valor compartido.
     // Pintarlo verde seria mentir: diria "coincidis" cuando no hay dato.
     if (clave === 'temporada' && (valor === SIN_DATO || esperado === SIN_DATO)) {
-      return { clave, texto: String(valor), flecha: null, estado: 'no' }
+      return {
+        clave,
+        texto: String(valor),
+        flecha: null,
+        ayuda: 'Temporada sin datos todavía',
+        estado: 'no',
+      }
     }
 
     const permiteCasi = clave === 'afi' || clave === 'poder'
@@ -125,7 +139,7 @@ export function comparar(personaje, objetivo) {
     if (valor === esperado) estado = 'ok'
     else if (permiteCasi && compartenPalabra(valor, esperado)) estado = 'casi'
 
-    return { clave, texto: String(valor), flecha: null, estado }
+    return { clave, texto: String(valor), flecha: null, ayuda: null, estado }
   })
 
   return { personaje, celdas, acertado: personaje.n === objetivo.n }

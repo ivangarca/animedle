@@ -29,10 +29,19 @@ export default function Tabla({ intentos }) {
             <Retrato personaje={intento.personaje} tamano="mini" />
             <span>{intento.personaje.n}</span>
           </div>
+
           {intento.celdas.map((celda) => (
-            <div className={`celda ${celda.estado}`} key={celda.clave}>
+            <div
+              className={`celda ${celda.estado}`}
+              key={celda.clave}
+              title={celda.ayuda ?? undefined}
+            >
               {celda.texto}
-              {celda.flecha && <span className="flecha">{celda.flecha}</span>}
+              {celda.flecha && (
+                <span className="flecha" aria-label={celda.ayuda}>
+                  {celda.flecha}
+                </span>
+              )}
             </div>
           ))}
         </div>

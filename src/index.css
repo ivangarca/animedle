@@ -381,6 +381,16 @@ button:disabled:hover {
 .flecha {
   font-size: 15px;
   font-weight: 800;
+  line-height: 1;
+}
+
+.leyenda-flechas {
+  margin: 8px 0 0;
+  font-size: 11.5px;
+}
+
+.leyenda-flechas b {
+  font-size: 13px;
 }
 
 @keyframes aparecer {

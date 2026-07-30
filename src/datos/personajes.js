@@ -60,11 +60,11 @@ export const PERSONAJES = [
   { n: 'Ub', a: ['uub', 'oob', 'uub buu'], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Secundario', afi: 'Humano', poder: 'Ki / Artes marciales', gen: 'Masculino' },
 
   //ONE PIECE
-  { n: 'Monkey D. Luffy', a: ['luffy', 'lufi', 'sombrero de paja'], serie: 'One Piece', temporada: '-', anio: 1999, rol: 'Protagonista', afi: 'Sombreros de Paja', poder: 'Fruta del Diablo', gen: 'Masculino' },
-  { n: 'Roronoa Zoro', a: ['zoro', 'zolo'], serie: 'One Piece', temporada: '-', anio: 1999, rol: 'Secundario', afi: 'Sombreros de Paja', poder: 'Espadachin', gen: 'Masculino' },
-  { n: 'Nami', a: [], serie: 'One Piece', temporada: '-', anio: 1999, rol: 'Secundario', afi: 'Sombreros de Paja', poder: 'Arma / Clima', gen: 'Femenino' },
-  { n: 'Sanji', a: [], serie: 'One Piece', temporada: '-', anio: 1999, rol: 'Secundario', afi: 'Sombreros de Paja', poder: 'Artes marciales', gen: 'Masculino' },
-  { n: 'Portgas D. Ace', a: ['ace', 'portgas'], serie: 'One Piece', temporada: '-', anio: 1999, rol: 'Secundario', afi: 'Piratas de Barbablanca', poder: 'Fruta del Diablo', gen: 'Masculino' },
+  { n: 'Monkey D. Luffy', a: ['luffy', 'lufi', 'sombrero de paja'], serie: 'One Piece', temporada: 'East Blue', anio: 1999, rol: 'Protagonista', afi: 'Sombreros de Paja', poder: 'Fruta del Diablo', gen: 'Masculino' },
+  { n: 'Roronoa Zoro', a: ['zoro', 'zolo'], serie: 'One Piece', temporada: 'East Blue', anio: 1999, rol: 'Secundario', afi: 'Sombreros de Paja', poder: 'Espadachin', gen: 'Masculino' },
+  { n: 'Nami', a: [], serie: 'One Piece', temporada: 'East Blue', anio: 1999, rol: 'Secundario', afi: 'Sombreros de Paja', poder: 'Arma / Clima', gen: 'Femenino' },
+  { n: 'Sanji', a: [], serie: 'One Piece', temporada: 'East Blue', anio: 1999, rol: 'Secundario', afi: 'Sombreros de Paja', poder: 'Artes marciales', gen: 'Masculino' },
+  { n: 'Portgas D. Ace', a: ['ace', 'portgas'], serie: 'One Piece', temporada: 'Alabasta', anio: 1999, rol: 'Secundario', afi: 'Piratas de Barbablanca', poder: 'Fruta del Diablo', gen: 'Masculino' },
 
   { n: 'Naruto Uzumaki', a: ['naruto'], serie: 'Naruto', temporada: '-', anio: 2002, rol: 'Protagonista', afi: 'Aldea de la Hoja', poder: 'Chakra / Ninjutsu', gen: 'Masculino' },
   { n: 'Sasuke Uchiha', a: ['sasuke'], serie: 'Naruto', temporada: '-', anio: 2002, rol: 'Rival', afi: 'Aldea de la Hoja', poder: 'Chakra / Ninjutsu', gen: 'Masculino' },
@@ -77,8 +77,28 @@ export const PERSONAJES = [
   { n: 'Ikki', a: ['ikki de fenix', 'fenix'], serie: 'Saint Seiya', temporada: '-', anio: 1986, rol: 'Secundario', afi: 'Caballeros de Atenea', poder: 'Armadura / Cosmos', gen: 'Masculino' },
   { n: 'Shiryu', a: ['shiryu de dragon'], serie: 'Saint Seiya', temporada: '-', anio: 1986, rol: 'Secundario', afi: 'Caballeros de Atenea', poder: 'Armadura / Cosmos', gen: 'Masculino' },
 
-  { n: 'Mark Evans', a: ['endo mamoru', 'endo', 'mark'], serie: 'Inazuma Eleven', temporada: '-', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
-  { n: 'Axel Blaze', a: ['gouenji', 'shuya gouenji', 'axel'], serie: 'Inazuma Eleven', temporada: '-', anio: 2008, rol: 'Secundario', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  // INAZUMA ELEVEN
+  // Inazuma Eleven 1
+  { n: 'Mark Evans', a: ['endo mamoru', 'endo', 'endou', 'mark'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Axel Blaze', a: ['gouenji', 'shuya gouenji', 'gouenji shuuya', 'axel'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Nathan Swift', a: ['kazemaru', 'kazemaru ichirouta', 'nathan'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Kevin Dragonfly', a: ['someoka', 'someoka ryuugo', 'kevin'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Jack Wallside', a: ['kabeyama', 'kabeyama heigorou', 'jack'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Shawn Frost', a: ['fubuki', 'fubuki shirou', 'shawn'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 2', anio: 2009, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Darren LaChance', a: ['tachimukai', 'tachimukai yuuki', 'darren'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 2', anio: 2009, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Austin Hobbes', a: ['toramaru', 'utsunomiya toramaru', 'austin'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 3', anio: 2010, rol: 'Protagonista', afi: 'Instituto Raimon', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Nelly Raimon', a: ['natsumi', 'natsumi raimon', 'nelly'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: '-', gen: 'Femenino' },
+  { n: 'Silvia Woods', a: ['aki', 'aki kino', 'kino aki', 'silvia'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: '-', gen: 'Femenino' },
+  { n: 'Celia Hills', a: ['haruna', 'haruna otonashi', 'celia'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Raimon', poder: '-', gen: 'Femenino' },
+  // --- Instituto Royal ---
+  { n: 'Jude Sharp', a: ['kidou', 'kidou yuuto', 'jude'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Royal', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'David Samford', a: ['sakuma', 'sakuma jirou', 'david'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Protagonista', afi: 'Instituto Royal', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Ray Dark', a: ['kageyama', 'kageyama reiji', 'ray'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Antagonista', afi: 'Instituto Royal', poder: '-', gen: 'Masculino' },
+  // --- Otros equipos ---
+  { n: 'Byron Love', a: ['aphrodi', 'afuro terumi', 'aprodi', 'byron'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 1', anio: 2008, rol: 'Rival', afi: 'Instituto Zeus', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Xavier Foster', a: ['hiroto', 'hiroto kiyama', 'gran', 'xavier'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 2', anio: 2009, rol: 'Protagonista', afi: 'Instituto Alius', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Caleb Stonewall', a: ['burn', 'nagumo haruya', 'nagumo', 'caleb'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 2', anio: 2009, rol: 'Protagonista', afi: 'Instituto Alius', poder: 'Supertecnica', gen: 'Masculino' },
+  { n: 'Jordan Greenway', a: ['gazelle', 'suzuno fuusuke', 'suzuno', 'jordan'], serie: 'Inazuma Eleven', temporada: 'Inazuma Eleven 2', anio: 2009, rol: 'Protagonista', afi: 'Instituto Alius', poder: 'Supertecnica', gen: 'Masculino' },
 
   { n: 'Ichigo Kurosaki', a: ['ichigo'], serie: 'Bleach', temporada: '-', anio: 2004, rol: 'Protagonista', afi: 'Shinigami', poder: 'Zanpakuto / Espiritu', gen: 'Masculino' },
   { n: 'Rukia Kuchiki', a: ['rukia'], serie: 'Bleach', temporada: '-', anio: 2004, rol: 'Secundario', afi: 'Shinigami', poder: 'Zanpakuto / Espiritu', gen: 'Femenino' },

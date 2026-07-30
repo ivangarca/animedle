@@ -182,6 +182,10 @@ export default function App() {
           <span className="leyenda casi" /> parecido
           <span className="leyenda no" /> no coincide
         </p>
+        <p className="leyenda-flechas">
+          En el año, <b>↑</b> significa que buscas un anime más nuevo y{' '}
+          <b>↓</b> más antiguo.
+        </p>
         <p className="fino">
           Proyecto personal sin ánimo de lucro. Datos de personajes con fines
           informativos; los derechos pertenecen a sus respectivos titulares.
