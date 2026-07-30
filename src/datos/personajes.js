@@ -29,34 +29,29 @@
  */
 export const PERSONAJES = [
   // DRAGON BALL
-  // --- Saiyans ---
-  { n: 'Goku', a: ['kakarot', 'kakarotto', 'son goku'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Vegeta', a: [], serie: 'Dragon Ball', temporada: 'Saga Saiyan', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Raditz', a: [], serie: 'Dragon Ball', temporada: 'Saga Saiyan', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Nappa', a: ['napa'], serie: 'Dragon Ball', temporada: 'Saga Saiyan', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Broly', a: [], serie: 'Dragon Ball', temporada: 'Películas', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  // --- Saiyans híbridos ---
-  { n: 'Gohan', a: ['son gohan'], serie: 'Dragon Ball', temporada: 'Saga Saiyan', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Goten', a: ['son goten'], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Trunks', a: ['trunks del futuro', 'mirai trunks'], serie: 'Dragon Ball', temporada: 'Saga Cell', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  // --- Namekianos ---
-  { n: 'Piccolo', a: ['picolo'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  // --- Villanos ---
-  { n: 'Freezer', a: ['frieza', 'freeza'], serie: 'Dragon Ball', temporada: 'Saga Freezer', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
+  { n: 'Goku', a: ['kakarot', 'kakarotto', 'son goku'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Saiyan' },
+  { n: 'Vegeta', a: [], serie: 'Dragon Ball', temporada: 'Saga Saiyan', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Saiyan' },
+  { n: 'Raditz', a: [], serie: 'Dragon Ball', temporada: 'Saga Saiyan', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Saiyan' },
+  { n: 'Nappa', a: ['napa'], serie: 'Dragon Ball', temporada: 'Saga Saiyan', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Saiyan' },
+  { n: 'Broly', a: [], serie: 'Dragon Ball', temporada: 'Películas', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Saiyan' },
+  { n: 'Gohan', a: ['son gohan'], serie: 'Dragon Ball', temporada: 'Saga Saiyan', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Híbrid Saiyan' },
+  { n: 'Goten', a: ['son goten'], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Híbrid Saiyan' },
+  { n: 'Trunks', a: ['trunks del futuro', 'mirai trunks'], serie: 'Dragon Ball', temporada: 'Saga Cell', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Híbrid Saiyan' },
+  { n: 'Piccolo', a: ['picolo'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Namekiano' },
+  { n: 'Freezer', a: ['frieza', 'freeza'], serie: 'Dragon Ball', temporada: 'Saga Freezer', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Raza Freezer' },
   { n: 'Cell', a: ['celula', 'célula'], serie: 'Dragon Ball', temporada: 'Saga Cell', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
   { n: 'Cell Jr.', a: ['cell jr', 'cellju', 'cell junior'], serie: 'Dragon Ball', temporada: 'Saga Cell', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Majin Buu', a: ['buu', 'boo', 'majin boo'], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  // --- Humanos ---
-  { n: 'Bulma', a: [], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: '-', gen: 'Femenino' },
-  { n: 'Muten Roshi', a: ['muten', 'roshi', 'follet tortuga', 'maestro tortuga', 'mutenroi'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Krilin', a: ['krillin', 'kuririn', 'crilin'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Yamcha', a: ['yamsha', 'yamsha lobo'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Ten Shin Han', a: ['tenshinhan', 'ten', 'tien', 'tien shinhan'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Chaoz', a: ['chaos', 'chiaotzu', 'chao'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Masculino' },
-  { n: 'Chi-Chi', a: ['chichi', 'milk'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Femenino' },
-  { n: 'Videl', a: [], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Femenino' },
-  { n: 'Mr. Satán', a: ['mr satan', 'mister satan', 'satan', 'hercule'], serie: 'Dragon Ball', temporada: 'Saga Cell', anio: 1986, rol: 'Secundario', poder: 'Artes marciales', gen: 'Masculino' },
-  { n: 'Ub', a: ['uub', 'oob', 'uub buu'], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Masculino' },
+  { n: 'Majin Buu', a: ['buu', 'boo', 'majin boo'], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Antagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Raza buu' },
+  { n: 'Bulma', a: [], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: '-', gen: 'Femenino', raza: 'Humano' },
+  { n: 'Muten Roshi', a: ['muten', 'roshi', 'follet tortuga', 'maestro tortuga', 'mutenroi'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Humano' },
+  { n: 'Krilin', a: ['krillin', 'kuririn', 'crilin'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Humano' },
+  { n: 'Yamcha', a: ['yamsha', 'yamsha lobo'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Humano' },
+  { n: 'Ten Shin Han', a: ['tenshinhan', 'ten', 'tien', 'tien shinhan'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Protagonista', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Humano' },
+  { n: 'Chaoz', a: ['chaos', 'chiaotzu', 'chao'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Humano' },
+  { n: 'Chi-Chi', a: ['chichi', 'milk'], serie: 'Dragon Ball', temporada: 'Dragon Ball', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Femenino', raza: 'Humano' },
+  { n: 'Videl', a: [], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Femenino', raza: 'Humano' },
+  { n: 'Mr. Satán', a: ['mr satan', 'mister satan', 'satan', 'hercule'], serie: 'Dragon Ball', temporada: 'Saga Cell', anio: 1986, rol: 'Secundario', poder: 'Artes marciales', gen: 'Masculino', raza: 'Humano' },
+  { n: 'Ub', a: ['uub', 'oob', 'uub buu'], serie: 'Dragon Ball', temporada: 'Saga Buu', anio: 1986, rol: 'Secundario', poder: 'Ki / Artes marciales', gen: 'Masculino', raza: 'Humano' },
 
   //ONE PIECE
   { n: 'Monkey D. Luffy', a: ['luffy', 'lufi', 'sombrero de paja'], serie: 'One Piece', temporada: 'East Blue', anio: 1999, rol: 'Protagonista', poder: 'Fruta del Diablo', gen: 'Masculino' },
